@@ -1,8 +1,41 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block title %}Profile{% endblock %}
 
 {% block content %}
     <h1>
-        {{ user.username }}'s profile
+        {{ user.get_full_name }} (@{{ user.username }})
     </h1>
-{% endblock %}
+
+    {% with profile=user.profile %}
+        {% if profile %}
+            <h2>
+                {{ profile.persona|default:"" }}
+            </h2>
+
+            <div>
+                {{ profile.bio|default:"" }}
+            </div>
+
+            {% with website=profile.website|default:"" %}
+                {% if website %}
+                    <p><a href="{{ website }}">{{ website }}</a></p>
+                {% endif %}
+            {% endwith %}
+
+            <br />
+            <br />
+
+            Interests:
+            <p>
+            {% for interest in profile.interests.all %}
+                <span>
+                    {{ interest.name }}{% if not forloop.last %}, {% endif %}
+                </span>
+            {% endfor %}
+            </p>
+        {% else %}
+            <p>No profile information available.</p>
+        {% endif %}
+    {% endwith %}
+{% endblock content %}
