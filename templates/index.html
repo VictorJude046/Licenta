@@ -1,9 +1,15 @@
 {%extends 'base.html' %}
-
-<title>{% block title %}Home{% endblock %}</title>
-
+{% load static %}
 {% block content %}
-    <h1>
-     Template Homepage
-    </h1>
+      <header class="masthead">
+            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+                <div class="d-flex justify-content-center">
+                    <div class="text-center">
+                        <h1 class="mx-auto my-0 text-uppercase">Fiare din beci</h1>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Săbii istorice, făcute din fier adevărat, nu din povești. Fiecare lamă are greutate, formă și respect pentru trecut.</h2>
+                        <a class="btn btn-primary" href="#about">Magazin</a>
+                    </div>
+                </div>
+            </div>
+        </header>
 {% endblock %}

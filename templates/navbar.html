@@ -1,23 +1,51 @@
-<div>
-     {% url 'public:index' as index_url %}
-    <span>{% if request.path == index_url %}Acasa{% else %}<a href="{{ index_url }}">Acasa</a>{% endif %}</span>
-    {% url 'public:shop' as shop_url %}
-    <span>{% if request.path == shop_url %}Magazin{% else %}<a href="{{ shop_url }}">Magazin</a>{% endif %}</span>
-    {% url 'public:events' as events_url %}
-    <span>{% if request.path == events_url %}Evenimente{% else %}<a href="{{ events_url }}">Evenimente</a>{% endif %}</span>
-    {% url 'public:personalized_orders' as personalized_orders_url %}
-    <span>{% if request.path == personalized_orders_url%}Comenzi personalizate{% else %}<a href="{{ personalized_orders_url }}">Comenzi personalizate</a>{% endif %}</span>
-    {% url 'public:about' as about_url %}
-    <span>{% if request.path == about_url %}Despre noi{% else %}<a href="{{ about_url }}">Despre noi</a>{% endif %}</span>
-    {% url 'public:contact' as contact_url %}
-    <span>{% if request.path == contact_url %}Contact{% else %}<a href="{{ contact_url }}">Contact</a>{% endif %}</span>
-    <span style="float:right">
-        {% if user.is_authenticated %}
-            {% url 'accounts:profile' as profile_url %}
-            <span>{% if request.path == profile_url %}{{ user.username }}{% else %}<a href="{{ profile_url }}">{{ user.username }}</a> {% endif %}</span>
-            <span><a href="{% url 'accounts:logout' %}">Logout</a></span>
-        {% else %}
-            <span><a href="{% url 'accounts:login' %}">Login</a></span>
-        {% endif %}
-    </span>
-</div>
+{% url 'public:contact' as contact_url %}
+{% url 'public:events' as events_url %}
+{% url 'public:personalized_orders' as personalized_orders_url %}
+{% url 'public:shop' as shop_url %}
+{% url 'public:about' as about_url %}
+{% url 'public:index' as index_url %}
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="{{ index_url }}">Fiare din beci</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link {% if request.path == index_url %}active {% endif %}" href="{{ index_url }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.path == about_url %}active {% endif %}" href="{{ about_url }}">About</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.path == shop_url %}active {% endif %}" href="{{ shop_url }}">Shop</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.path == personalized_orders_url %}active {% endif %}" href="{{ personalized_orders_url }}">Personalized Orders</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.path == events_url %}active {% endif %}" href="{{ events_url }}">Events</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.path == contact_url %}active {% endif %}" href="{{ contact_url }}">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+  </nav>
+
+{##}
+{#<div>#}
+{#     {% url 'public:index' as index_url %}#}
+{#    <span>{% if request.path == index_url %}Acasa{% else %}<a href="{{ index_url }}">Acasa</a>{% endif %}</span>#}
+{#    {% url 'public:shop' as shop_url %}#}
+{#    <span>{% if request.path == shop_url %}Magazin{% else %}<a href="{{ shop_url }}">Magazin</a>{% endif %}</span>#}
+{#    {% url 'public:events' as events_url %}#}
+{#    <span>{% if request.path == events_url %}Evenimente{% else %}<a href="{{ events_url }}">Evenimente</a>{% endif %}</span>#}
+{#    {% url 'public:personalized_orders' as personalized_orders_url %}#}
+{#    <span>{% if request.path == personalized_orders_url%}Comenzi personalizate{% else %}<a href="{{ personalized_orders_url }}">Comenzi personalizate</a>{% endif %}</span>#}
+{#    {% url 'public:about' as about_url %}#}
+{#    <span>{% if request.path == about_url %}Despre noi{% else %}<a href="{{ about_url }}">Despre noi</a>{% endif %}</span>#}
+{#    {% url 'public:contact' as contact_url %}#}
+{#    <span>{% if request.path == contact_url %}Contact{% else %}<a href="{{ contact_url }}">Contact</a>{% endif %}</span>#}
+{#    <span style="float:right">#}
+{#        {% if user.is_authenticated %}#}
+{#            {% url 'accounts:profile' as profile_url %}#}
+{#            <span>{% if request.path == profile_url %}{{ user.username }}{% else %}<a href="{{ profile_url }}">{{ user.username }}</a> {% endif %}</span>#}
+{#            <span><a href="{% url 'accounts:logout' %}">Logout</a></span>#}
+{#        {% else %}#}
+{#            <span><a href="{% url 'accounts:login' %}">Login</a></span>#}
+{#        {% endif %}#}
+{#    </span>#}
+{#</div>#}
