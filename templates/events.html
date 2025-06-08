@@ -1,8 +1,62 @@
 {% extends 'base.html' %}
-{% block title %}Events{% endblock %}
+{% load static %}
+
+{% block title %}Evenimente - Fiare din Beci{% endblock %}
 
 {% block content %}
-    <h1>
-        Events
-    </h1>
+<!-- ========================================================================= -->
+<!-- Events Section                                                          -->
+<!-- ========================================================================= -->
+<section class="events-section bg-light content-section">
+    <div class="container px-4 px-lg-5 py-5">
+
+        <!-- Page Title -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-black mb-4">Evenimente și Târguri</h2>
+                <p class="text-black-50">
+                    Ne găsiți la cele mai importante târguri medievale și evenimente de reconstituire istorică din țară. Veniți să vedeți lamele în persoană, să discutați despre tehnicile de forjare și să simțiți greutatea istoriei în mâinile voastre.
+                </p>
+                <hr class="my-4 mx-auto" />
+            </div>
+        </div>
+
+        <!-- Events List -->
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <!-- Event Item 1 -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Festivalul Medieval de la Sighișoara</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">26 - 28 Iulie, 2024</h6>
+                        <p class="card-text">Vom fi prezenți cu un stand de prezentare și vânzare în inima cetății Sighișoara. Vom avea demonstrații de forjare și o expoziție cu cele mai noi piese.</p>
+                        <a href="#" class="card-link">Mai multe detalii</a>
+                    </div>
+                </div>
+
+                <!-- Event Item 2 -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Târgul Meșterilor Populari, Timișoara</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">15 Septembrie, 2024</h6>
+                        <p class="card-text">Ne întoarcem acasă pentru târgul anual al meșterilor. O oportunitate excelentă pentru a discuta despre comenzi personalizate și pentru a vedea procesul de creație.</p>
+                         <a href="#" class="card-link">Mai multe detalii</a>
+                    </div>
+                </div>
+
+                <!-- Event Item 3 - Example of a past event -->
+                <div class="card shadow-sm mb-4 bg-white-50">
+                     <div class="card-body">
+                        <h4 class="card-title text-muted"><s>Festivalul Cetăților Dacice</s> (Eveniment încheiat)</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">15 - 17 Iunie, 2024</h6>
+                        <p class="card-text">Am fost prezenți la cea de-a XV-a ediție a festivalului, unde am prezentat o colecție de replici de arme dacice și romane.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
 {% endblock %}

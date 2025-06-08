@@ -1,8 +1,28 @@
 {% extends 'base.html' %}
-{% block title %}About{% endblock %}
+{% load static %}
+
+{% block title %}Despre Noi - Fiare din Beci{% endblock %}
 
 {% block content %}
-    <h1>
-        About
-    </h1>
+<!-- ========================================================================= -->
+<!-- About Section - This is the content for your 'About' page.              -->
+<!-- It's taken from your static index.html and adapted for this page.       -->
+<!-- ========================================================================= -->
+<section class="about-section text-center  content-section" id="about">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="text-white mb-4">Forjate cu Măiestrie</h2>
+                <p class="text-white-50">
+                    "Fiare din Beci" este mai mult decât un atelier; este o pasiune pentru istorie și metalurgie. Fiecare replică este rezultatul unor ore de studiu și muncă manuală, respectând tehnicile și materialele vremurilor trecute. Proiectul s-a născut din dorința de a aduce la viață nu doar obiecte, ci și poveștile pe care le poartă.
+                </p>
+            </div>
+        </div>
+
+        <!-- You can replace 'ipad.png' with a picture of your workshop or a sword -->
+        <!-- The image path has been converted to use Django's static file system. -->
+        <img class="img-fluid" src="{% static 'theme/assets/img/ipad.png' %}" alt="Imagine din atelier" />
+
+    </div>
+</section>
 {% endblock %}

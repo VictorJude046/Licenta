@@ -5,6 +5,10 @@ x-service-volumes: &service-volumes
       source: ./
       target: /app
       read_only: false
+    - type: bind
+      source: media
+      target: /app/media
+      read_only: false
 
 
 x-database-variables: &database-variables

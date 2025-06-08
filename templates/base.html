@@ -1,6 +1,6 @@
 <!--templates/base.html -->
 {% load static %}
-
+{% url 'public:index' as index_url %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@
 
             <link href="{% static 'css/main.css' %}" rel="stylesheet" />
 </head>
-<body>
+<body id="page-top">
 {% include 'navbar.html' %}
     <main id="main">
         {% block content %}
@@ -28,5 +28,23 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{% static 'theme/js/scripts.js'%}"></script>
 
+        <!-- ========================================================================= -->
+        <!-- ==          FIX FOR NAVBAR ON HOMEPAGE (Add this script block)         == -->
+        <!-- ========================================================================= -->
+        <script>
+            // This script runs on every page load to ensure the navbar is correct.
+            document.addEventListener("DOMContentLoaded", function() {
+                // Check if the current page is the homepage.
+                if (window.location.pathname === "{% get_static_prefix %}".slice(0, -1) + "{{ index_url }}") {
+                    // If it's the homepage and the user is at the top, remove the 'navbar-shrink' class.
+                    if (window.scrollY === 0) {
+                        const mainNav = document.querySelector("#mainNav");
+                        if (mainNav) {
+                             mainNav.classList.remove("navbar-shrink");
+                        }
+                    }
+                }
+            });
+        </script>
 </body>
 </html>

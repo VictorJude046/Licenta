@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.admin",
     "DjangoProject2.apps.accounts",
+    'DjangoProject2.apps.public.apps.PublicConfig',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,6 @@ LOGOUT_REDIRECT_URL = "public:index"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

@@ -5,7 +5,8 @@
 {% url 'public:about' as about_url %}
 {% url 'public:index' as index_url %}
 
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+<!-- The class 'navbar-shrink' is now added conditionally -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top {% if request.path != index_url %}navbar-shrink{% endif %}" id="mainNav">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="{{ index_url }}">Fiare din beci</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,28 +25,3 @@
         </div>
     </div>
   </nav>
-
-{##}
-{#<div>#}
-{#     {% url 'public:index' as index_url %}#}
-{#    <span>{% if request.path == index_url %}Acasa{% else %}<a href="{{ index_url }}">Acasa</a>{% endif %}</span>#}
-{#    {% url 'public:shop' as shop_url %}#}
-{#    <span>{% if request.path == shop_url %}Magazin{% else %}<a href="{{ shop_url }}">Magazin</a>{% endif %}</span>#}
-{#    {% url 'public:events' as events_url %}#}
-{#    <span>{% if request.path == events_url %}Evenimente{% else %}<a href="{{ events_url }}">Evenimente</a>{% endif %}</span>#}
-{#    {% url 'public:personalized_orders' as personalized_orders_url %}#}
-{#    <span>{% if request.path == personalized_orders_url%}Comenzi personalizate{% else %}<a href="{{ personalized_orders_url }}">Comenzi personalizate</a>{% endif %}</span>#}
-{#    {% url 'public:about' as about_url %}#}
-{#    <span>{% if request.path == about_url %}Despre noi{% else %}<a href="{{ about_url }}">Despre noi</a>{% endif %}</span>#}
-{#    {% url 'public:contact' as contact_url %}#}
-{#    <span>{% if request.path == contact_url %}Contact{% else %}<a href="{{ contact_url }}">Contact</a>{% endif %}</span>#}
-{#    <span style="float:right">#}
-{#        {% if user.is_authenticated %}#}
-{#            {% url 'accounts:profile' as profile_url %}#}
-{#            <span>{% if request.path == profile_url %}{{ user.username }}{% else %}<a href="{{ profile_url }}">{{ user.username }}</a> {% endif %}</span>#}
-{#            <span><a href="{% url 'accounts:logout' %}">Logout</a></span>#}
-{#        {% else %}#}
-{#            <span><a href="{% url 'accounts:login' %}">Login</a></span>#}
-{#        {% endif %}#}
-{#    </span>#}
-{#</div>#}

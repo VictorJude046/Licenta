@@ -1,4 +1,5 @@
 {%extends 'base.html' %}
+{% url 'public:shop' as shop_url %}
 {% load static %}
 {% block content %}
       <header class="masthead">
@@ -7,9 +8,48 @@
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">Fiare din beci</h1>
                         <h2 class="text-white-50 mx-auto mt-2 mb-5">Săbii istorice, făcute din fier adevărat, nu din povești. Fiecare lamă are greutate, formă și respect pentru trecut.</h2>
-                        <a class="btn btn-primary" href="#about">Magazin</a>
+                        <a class="btn btn-primary" href="{{ shop_url }}">Magazin</a>
                     </div>
                 </div>
             </div>
         </header>
+        <section class="projects-section bg-light" id="projects">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
+                    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="{% static 'theme/assets/img/bg-masthead.jpg' %}" alt="..." /></div>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="featured-text text-center text-lg-left">
+                            <h4>Proiecte Deosebite</h4>
+                            <p class="text-black-50 mb-0">Aici puteți vedea unele dintre cele mai complexe și detaliate lucrări ale noastre, forjate cu atenție la detaliul istoric.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+                    <div class="col-lg-6"><img class="img-fluid" src="{% static 'theme/assets/img/demo-image-01.jpg' %}" alt="..." /></div>
+                    <div class="col-lg-6">
+                        <div class="bg-black text-center h-100 project">
+                            <div class="d-flex h-100">
+                                <div class="project-text w-100 my-auto text-center text-lg-left">
+                                    <h4 class="text-white">Spadă Vikingă</h4>
+                                    <p class="mb-0 text-white-50">O replică fidelă a unei spade vikinge din secolul al IX-lea, cu detalii gravate manual.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-0 justify-content-center">
+                    <div class="col-lg-6"><img class="img-fluid" src="{% static 'theme/assets/img/demo-image-02.jpg' %}" alt="..." /></div>
+                    <div class="col-lg-6 order-lg-first">
+                        <div class="bg-black text-center h-100 project">
+                            <div class="d-flex h-100">
+                                <div class="project-text w-100 my-auto text-center text-lg-right">
+                                    <h4 class="text-white">Sabie de Cavaler</h4>
+                                    <p class="mb-0 text-white-50">Inspirată de săbiile cavalerilor templieri, această piesă combină robustețea cu eleganța.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 {% endblock %}

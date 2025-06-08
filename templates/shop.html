@@ -1,8 +1,55 @@
 {% extends 'base.html' %}
-{% block title %}Shop{% endblock %}
+{% load static %}
+
+{% block title %}Magazin - Fiare din Beci{% endblock %}
 
 {% block content %}
-    <h1>
-        Shop
-    </h1>
+<section class="shop-section bg-light content-section">
+    <div class="container px-4 px-lg-5">
+
+        <!-- Page Title -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-white mb-4">Magazinul Nostru</h2>
+                <p class="text-white-50">
+                    Descoperiți colecția noastră de replici istorice. Fiecare piesă este unică, forjată manual cu respect pentru tradiție și istorie.
+                </p>
+                <hr class="my-4 mx-auto" />
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="row gx-4 gx-lg-5">
+            {% for product in products %}
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="card h-100 bg-dark text-white">
+                    <!-- Product image -->
+                    {% if product.image %}
+                    <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                    {% endif %}
+                    <!-- Product details -->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name -->
+                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                            <!-- Product price -->
+                            <span class="text-muted">{{ product.price }} RON</span>
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <!-- Link to the product detail page -->
+                        <div class="text-center"><a class="btn btn-outline-light mt-auto" href="{% url 'public:product_detail' product.id %}">Vezi detalii</a></div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-white-50">Momentan nu sunt produse disponibile în magazin.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
 {% endblock %}
