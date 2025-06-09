@@ -5,99 +5,174 @@
 
 {% block extra_styles %}
 <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        color: #1c1c1c;
+    }
 
+    .product-detail {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3rem;
+        margin-top: 3rem;
+    }
 
-    .image-gallery-container {
+    .gallery-column {
+        flex: 1 1 400px;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .main-image-wrapper {
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        padding: 1rem;
+        width: 100%;
     }
 
     #mainProductImage {
         width: 100%;
-        max-width: 100%;
-        height: auto;
+        object-fit: contain;
         aspect-ratio: 1 / 1;
-        object-fit: cover;
-        border-radius: 0.25rem;
-        border: 1px solid #495057;
+        border-radius: 6px;
     }
 
-    .gallery-controls {
+    .gallery-controls-wrapper {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 0.75rem;
+        margin-top: 0.5rem;
+        position: relative;
+    }
+
+    .gallery-btn-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #2a2a2a;
+        border: 2px solid #888;
+        color: #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        flex-shrink: 0;
+    }
+
+    .gallery-btn-icon:hover {
+        background-color: #ccc;
+        color: #1c1c1c;
+        transform: scale(1.1);
     }
 
     .thumbnail-wrapper {
         flex-grow: 1;
         overflow-x: auto;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-    .thumbnail-wrapper::-webkit-scrollbar {
-        display: none;
+        padding: 0.25rem 0;
     }
 
     .thumbnail-container {
         display: flex;
-        gap: 0.75rem;
-        padding-bottom: 5px;
         justify-content: center;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
     }
 
     .thumbnail-container img {
-        width: 70px !important;
-        height: 70px !important;
+        width: 70px;
+        height: 70px;
         object-fit: cover;
         border-radius: 4px;
         cursor: pointer;
-        border: 2px solid transparent;
-        transition: border-color 0.2s ease;
-        flex-shrink: 0;
         opacity: 0.7;
+        border: 2px solid transparent;
+        transition: all 0.2s ease;
     }
 
     .thumbnail-container img:hover {
         opacity: 1;
+        transform: scale(1.05);
     }
 
     .thumbnail-container img.active {
-        border-color: #64a19d;
+        border-color: #ff6f3c;
         opacity: 1;
     }
 
-    .gallery-btn {
-        flex-shrink: 0;
-        padding: 0.5rem 1rem;
+    .info-column {
+        flex: 1 1 400px;
+        color: #1c1c1c;
     }
 
-    .gallery-btn.hidden {
-        display: none;
+    .info-column h1 {
+        font-size: 2.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-column .price {
+        font-size: 1.75rem;
+        color: #ff6f3c;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-column p {
+        margin-bottom: 1.5rem;
+        color: #1c1c1c;
     }
 
     .btn-theme-primary {
-        background-color: #64a19d;
-        border-color: #64a19d;
-        color: #fff;
+        background-color: #ff6f3c;
+        border: none;
+        padding: 0.75rem 1.5rem;
         font-weight: bold;
+        color: white;
+        transition: transform 0.2s ease;
     }
+
     .btn-theme-primary:hover {
-        background-color: #558985;
-        border-color: #50817e;
-        color: #fff;
+        background-color: #e65c2f;
+        transform: scale(1.05);
     }
 
     #inputQuantity {
-        background-color: #343a40;
+        width: 80px;
+        background-color: #2a2a2a;
         color: #fff;
-        border-color: #495057;
+        border: 1px solid #444;
+        text-align: center;
+        margin-right: 1rem;
     }
-    #inputQuantity:focus {
-        background-color: #343a40;
+
+    section.bg-light {
+        background-color: #1c1c1c !important;
+    }
+
+    section.bg-light .card {
+        background-color: #2b2b2b;
+        color: #1c1c1c;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .card-body, .card-footer {
+        background-color: transparent;
+    }
+
+    .btn-outline-dark {
+        color: #ccc;
+        border-color: #555;
+    }
+
+    .btn-outline-dark:hover {
+        background-color: #333;
+        border-color: #666;
         color: #fff;
-        border-color: #64a19d;
-        box-shadow: none;
     }
 </style>
 {% endblock %}
@@ -107,42 +182,37 @@
 {{ image_urls_json|json_script:"image-data" }}
 
 <section class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="row gx-4 gx-lg-5 align-items-center">
-
-            <div class="col-md-6">
-                <div class="image-gallery-container">
-                    <img class="card-img-top mb-4" id="mainProductImage" src="" alt="{{ product.name }}" />
-
-                    <div class="gallery-controls">
-                        <button class="btn gallery-btn btn-theme-primary hidden" id="prev-image-btn">
-                            <i class="fas fa-arrow-left me-2"></i>Imaginea antecedenta
-                        </button>
-                        <div class="thumbnail-wrapper">
-                            <div class="thumbnail-container" id="thumbnailContainer">
-                                </div>
-                        </div>
-                        <button class="btn gallery-btn btn-theme-primary hidden" id="next-image-btn">
-                            Imaginea urmatoare<i class="fas fa-arrow-right ms-2"></i>
-                        </button>
-                    </div>
-                </div>
+    <div class="container px-4 px-lg-5 my-5 product-detail">
+        <div class="gallery-column">
+            <div class="main-image-wrapper">
+                <img id="mainProductImage" src="" alt="{{ product.name }}" />
             </div>
 
-            <div class="col-md-6">
-                <div class="small mb-1">Categorie: {{ product.category.name }}</div>
-                <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
-                <div class="fs-5 mb-5">
-                    <span>{{ product.price }} RON</span>
+            <div class="gallery-controls-wrapper">
+                <button class="btn gallery-btn-icon hidden" id="prev-image-btn" aria-label="Previous image">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <div class="thumbnail-wrapper">
+                    <div class="thumbnail-container" id="thumbnailContainer"></div>
                 </div>
-                <p class="lead">{{ product.description|linebreaks }}</p>
-                <div class="d-flex">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 4rem" />
-                    <button class="btn btn-theme-primary flex-shrink-0" type="button" style="padding: 0.75rem 1.5rem;">
-                        <i class="bi-cart-fill me-1"></i>
-                        Add to Cart
-                    </button>
-                </div>
+
+                <button class="btn gallery-btn-icon hidden" id="next-image-btn" aria-label="Next image">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="info-column">
+            <div class="small mb-1">Categorie: {{ product.category.name }}</div>
+            <h1 class="fw-bolder">{{ product.name }}</h1>
+            <div class="price">{{ product.price }} RON</div>
+            <p class="lead">{{ product.description|linebreaks }}</p>
+            <div class="d-flex align-items-center">
+                <input class="form-control text-center" id="inputQuantity" type="number" value="1" />
+                <button class="btn btn-theme-primary ms-3" type="button">
+                    <i class="bi-cart-fill me-1"></i> Adaugă în coș
+                </button>
             </div>
         </div>
     </div>
@@ -153,7 +223,6 @@
     <div class="container px-4 px-lg-5 mt-5">
         <h2 class="fw-bolder mb-4">Produse similare</h2>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
             {% for related_product in related_products %}
             <div class="col mb-5">
                 <div class="card h-100">
@@ -162,7 +231,6 @@
                     {% else %}
                         <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="No image available" />
                     {% endif %}
-
                     <div class="card-body p-4">
                         <div class="text-center">
                             <h5 class="fw-bolder">{{ related_product.name }}</h5>
@@ -177,7 +245,6 @@
                 </div>
             </div>
             {% endfor %}
-
         </div>
     </div>
 </section>
@@ -208,15 +275,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function updateGallery() {
         mainImage.src = imageUrls[currentIndex];
-
         const thumbnails = thumbnailContainer.querySelectorAll('img');
         thumbnails.forEach((thumb, index) => {
+            thumb.classList.toggle('active', index === currentIndex);
             if (index === currentIndex) {
-                thumb.classList.add('active');
-                // Make sure the active thumbnail is visible in the scrollable container
                 thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            } else {
-                thumb.classList.remove('active');
             }
         });
     }
@@ -225,7 +288,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const thumb = document.createElement('img');
         thumb.src = url;
         thumb.alt = `Product image ${index + 1}`;
-
         thumb.addEventListener('click', function() {
             currentIndex = index;
             updateGallery();
