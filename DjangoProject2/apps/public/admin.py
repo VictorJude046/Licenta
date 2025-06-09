@@ -1,17 +1,24 @@
 from django.contrib import admin
-from .models import Product, ProductImage
+from .models import Category, Product, ProductImage
 
-# This tells the admin to allow adding multiple images
-# on the same page as the product.
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
-    extra = 1  # How many extra empty fields to show
+    extra = 1
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+
+    list_display = ['name', 'category', 'price']
+    list_filter = ['category']
     inlines = [ProductImageInline]
 
-# We also register ProductImage so it can be managed separately if needed.
+
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
     pass

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "DjangoProject2.apps.accounts",
     'DjangoProject2.apps.public.apps.PublicConfig',
+    'DjangoProject2.apps.shopping_cart' ,
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+CART_SESSION_ID = 'cart'

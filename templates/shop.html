@@ -18,6 +18,38 @@
             </div>
         </div>
 
+    <div class="card bg-dark text-white mb-5">
+            <div class="card-body">
+                <form method="GET" action="{% url 'public:shop' %}" class="row g-3 align-items-center justify-content-center">
+                    <div class="col-md-5">
+                        <label for="category" class="form-label">Filtreaza dupa Categorie</label>
+                        <select name="category" id="category" class="form-select bg-secondary text-white border-secondary">
+                            <option value="">Toate Categoriile</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}" {% if category.id|stringformat:"s" == selected_category_id %}selected{% endif %}>
+                                    {{ category.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-5">
+                        <label for="sort" class="form-label">Sorteaza dupa</label>
+                        <select name="sort" id="sort" class="form-select bg-secondary text-white border-secondary">
+                            <option value="name_asc" {% if selected_sort == 'name_asc' %}selected{% endif %}>Nume (A-Z)</option>
+                            <option value="name_desc" {% if selected_sort == 'name_desc' %}selected{% endif %}>Nume (Z-A)</option>
+                            <option value="price_asc" {% if selected_sort == 'price_asc' %}selected{% endif %}>Pret (Crescator)</option>
+                            <option value="price_desc" {% if selected_sort == 'price_desc' %}selected{% endif %}>Pret (Descrescator)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Aplica</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- Products Grid -->
         <div class="row gx-4 gx-lg-5">
             {% for product in products %}
