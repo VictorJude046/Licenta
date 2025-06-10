@@ -3,26 +3,86 @@
 
 {% block title %}Despre Noi - Fiare din Beci{% endblock %}
 
+{% block extra_styles %}
+<style>
+body {
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.6), transparent 80%);
+
+}
+
+.about-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  background-color: #000; /* solid black base */
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.07)  10%, rgba(0, 0, 0, 0.9) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.about-content {
+  max-width: 900px;
+  padding: 3rem 2rem;
+  font-family: inherit; /* uses base font */
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 25px rgba(255, 111, 60, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-content:hover {
+  transform: scale(1.015);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 12px 36px rgba(0, 0, 0, 0.6),
+    0 0 35px rgba(255, 111, 60, 0.1);
+}
+
+
+.about-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #ffffff !important;
+}
+
+.about-content h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 0.75rem auto;
+  background-color: #ff6f3c;
+  border-radius: 2px;
+}
+
+.about-content p {
+  color: #ffffff !important;
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+</style>
+{% endblock %}
+
 {% block content %}
-<!-- ========================================================================= -->
-<!-- About Section - This is the content for your 'About' page.              -->
-<!-- It's taken from your static index.html and adapted for this page.       -->
-<!-- ========================================================================= -->
-<section class="about-section text-center  content-section" id="about">
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-lg-8">
-                <h2 class="text-white mb-4">Forjate cu Măiestrie</h2>
-                <p class="text-white-50">
-                    "Fiare din Beci" este mai mult decât un atelier; este o pasiune pentru istorie și metalurgie. Fiecare replică este rezultatul unor ore de studiu și muncă manuală, respectând tehnicile și materialele vremurilor trecute. Proiectul s-a născut din dorința de a aduce la viață nu doar obiecte, ci și poveștile pe care le poartă.
-                </p>
-            </div>
-        </div>
-
-        <!-- You can replace 'ipad.png' with a picture of your workshop or a sword -->
-        <!-- The image path has been converted to use Django's static file system. -->
-        <img class="img-fluid" src="{% static 'theme/assets/img/ipad.png' %}" alt="Imagine din atelier" />
-
-    </div>
+<section class="about-section">
+  <div class="about-content">
+    <h2>Despre Noi</h2>
+    <p>
+      Bine ai venit la Fiare din Beci — un loc unde pasiunea pentru fier vechi se îmbină cu povestea fiecărei piese.
+      Scopul nostru este să aducem în fața ta obiecte rare, restaurate cu grijă, pentru colecționari sau entuziaști.
+    </p>
+    <p>
+      Fiecare produs are o poveste, iar noi credem că trecutul merită să fie prezent. Descoperă colecțiile noastre și alătură-te comunității care iubește autenticitatea.
+    </p>
+  </div>
 </section>
 {% endblock %}

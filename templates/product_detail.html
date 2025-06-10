@@ -209,10 +209,17 @@
             <div class="price">{{ product.price }} RON</div>
             <p class="lead">{{ product.description|linebreaks }}</p>
             <div class="d-flex align-items-center">
-                <input class="form-control text-center" id="inputQuantity" type="number" value="1" />
-                <button class="btn btn-theme-primary ms-3" type="button">
-                    <i class="bi-cart-fill me-1"></i> Adaugă în coș
-                </button>
+                <form action="{% url 'shopping_cart:add_to_cart' product.id %}" method="post" class="d-flex w-100">
+                    {% csrf_token %}
+                    <input class="form-control text-center" id="inputQuantity" name="quantity" type="number" value="1" style="max-width: 5rem;" />
+
+                    <input type="hidden" name="update" value="True">
+
+                    <button class="btn btn-theme-primary ms-3 flex-shrink-0" type="submit">
+                        <i class="bi-cart-fill me-1"></i>
+                        Adaugă în coș
+                    </button>
+                </form>
             </div>
         </div>
     </div>

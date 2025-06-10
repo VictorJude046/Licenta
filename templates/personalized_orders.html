@@ -6,18 +6,17 @@
 {% block content %}
 <!-- ========================================================================= -->
 <!-- Personalized Orders Section                                             -->
-<!-- ========================================================================= -->
-<section class="personalized-orders-section bg-light  content-section">
+<!-- ========================================================================= --><section class="personalized-orders-section bg-light content-section">
     <div class="container px-4 px-lg-5 py-5">
 
         <!-- Page Title -->
         <div class="row justify-content-center mb-5">
             <div class="col-lg-8 text-center">
-                <h2 class="text-black mb-4">Comenzi Personalizate</h2>
-                <p class="text-black-50">
+                <h2 class="mb-4">Comenzi Personalizate</h2>
+                <p>
                     Aveți o idee pentru o piesă unică? O replică a unei arme de familie sau o lamă pe care ați văzut-o într-un manuscris vechi? Aici o putem aduce la viață. Completați formularul de mai jos cu cât mai multe detalii, iar noi vă vom contacta pentru a discuta fezabilitatea, timpul de execuție și costurile.
                 </p>
-                <hr class="my-4 mx-auto" />
+                <hr />
             </div>
         </div>
 
@@ -27,21 +26,24 @@
                 <form id="customOrderForm">
                     <!-- Name input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="name" type="text" placeholder="Numele dumneavoastră..." required />
+                        <input type="text" class="form-control" id="name" placeholder=" " required>
                         <label for="name">Nume complet</label>
                     </div>
                     <!-- Email address input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="email" placeholder="adresa@email.com" required />
-                        <label for="email">Adresă de email</label>
+                        <input type="text" class="form-control" id="email" placeholder=" " required>
+                        <label for="email">Adresa de email</label>
                     </div>
                     <!-- Message input-->
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" id="message" type="text" placeholder="Descrieți comanda..." style="height: 10rem" required></textarea>
+                        <input type="text" class="form-control" id="message" placeholder=" " style="height: 10rem" required>
                         <label for="message">Descrierea comenzii</label>
+
                     </div>
                     <!-- Submit Button-->
-                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Trimite Cererea</button></div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Trimite Cererea</button>
+                    </div>
                 </form>
             </div>
         </div>

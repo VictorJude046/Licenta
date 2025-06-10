@@ -1,52 +1,158 @@
-<!--templates/base.html -->
 {% load static %}
 {% url 'public:index' as index_url %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Fiare Din Beci{% endblock %}</title>
-     <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-            <meta name="description" content="" />
-            <meta name="author" content="" />
-            <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-            <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-            <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-            <link href="{% static 'theme/css/styles.css' %}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-            <link href="{% static 'css/main.css' %}" rel="stylesheet" />
-            {% block extra_styles %}{% endblock %}
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet" />
+
+    <!-- CSS -->
+    <link href="{% static 'theme/css/styles.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+    {% block extra_styles %}{% endblock %}
 </head>
 <body id="page-top">
-{% include 'navbar.html' %}
+    {% include 'navbar.html' %}
+
     <main id="main">
-        {% block content %}
-
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="{% static 'theme/js/scripts.js'%}"></script>
 
-        <!-- ========================================================================= -->
-        <!-- ==          FIX FOR NAVBAR ON HOMEPAGE (Add this script block)         == -->
-        <!-- ========================================================================= -->
-        <script>
-            // This script runs on every page load to ensure the navbar is correct.
-            document.addEventListener("DOMContentLoaded", function() {
-                // Check if the current page is the homepage.
-                if (window.location.pathname === "{% get_static_prefix %}".slice(0, -1) + "{{ index_url }}") {
-                    // If it's the homepage and the user is at the top, remove the 'navbar-shrink' class.
-                    if (window.scrollY === 0) {
-                        const mainNav = document.querySelector("#mainNav");
-                        if (mainNav) {
-                             mainNav.classList.remove("navbar-shrink");
-                        }
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'theme/js/scripts.js' %}"></script>
+
+    <!-- Navbar Fix for Homepage -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.location.pathname === "{% get_static_prefix %}".slice(0, -1) + "{{ index_url }}") {
+                if (window.scrollY === 0) {
+                    const mainNav = document.querySelector("#mainNav");
+                    if (mainNav) {
+                        mainNav.classList.remove("navbar-shrink");
                     }
                 }
-            });
-        </script>
-{% block extra_scripts %}{% endblock %}
+            }
+        });
+    </script>
+
+    <!-- AI Chat Button -->
+    <!-- Toggle Button -->
+<button id="chat-toggle" style="
+  position: fixed; bottom: 20px; right: 20px;
+  background: #ff6f3c; border: none; border-radius: 50%;
+  width: 56px; height: 56px; color: white; font-size: 26px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1001;">💬</button>
+
+<!-- Chat Box -->
+<div id="chat-box" style="
+  display: none;
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 360px;
+  height: 480px;
+  background: #1c1c1c;
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Nunito', sans-serif;
+">
+  <!-- Chat messages -->
+  <div id="chat-log" style="
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  "></div>
+
+  <!-- Input -->
+  <form id="chat-form" style="display: flex; border-top: 1px solid #333;">
+    <input type="text" id="chat-input" placeholder="Scrie o întrebare..." style="
+      flex: 1;
+      padding: 0.75rem;
+      background: #2a2a2a;
+      color: white;
+      border: none;
+      font-size: 0.95rem;">
+    <button type="submit" style="
+      background: #ff6f3c;
+      border: none;
+      color: white;
+      padding: 0 1rem;
+      font-weight: bold;">Trimite</button>
+  </form>
+</div>
+<script>
+document.getElementById('chat-toggle').onclick = () => {
+  const box = document.getElementById('chat-box');
+  box.style.display = box.style.display === 'none' ? 'flex' : 'none';
+};
+
+document.getElementById('chat-form').onsubmit = async function(e) {
+  e.preventDefault();
+  const input = document.getElementById('chat-input');
+  const log = document.getElementById('chat-log');
+  const userMsg = input.value.trim();
+  if (!userMsg) return;
+
+  // Mesaj user
+  const userBubble = document.createElement('div');
+  userBubble.style.alignSelf = 'flex-end';
+  userBubble.style.background = '#333';
+  userBubble.style.color = '#fff';
+  userBubble.style.padding = '0.75rem 1rem';
+  userBubble.style.borderRadius = '12px';
+  userBubble.style.maxWidth = '80%';
+  userBubble.innerText = userMsg;
+  log.appendChild(userBubble);
+  log.scrollTop = log.scrollHeight;
+
+  input.value = '';
+
+  // Loading...
+  const aiBubble = document.createElement('div');
+  aiBubble.style.alignSelf = 'flex-start';
+  aiBubble.style.background = '#2d2d2d';
+  aiBubble.style.color = '#ccc';
+  aiBubble.style.padding = '0.75rem 1rem';
+  aiBubble.style.borderRadius = '12px';
+  aiBubble.style.maxWidth = '80%';
+  aiBubble.innerText = '...';
+  log.appendChild(aiBubble);
+  log.scrollTop = log.scrollHeight;
+
+  try {
+    const res = await fetch("{% url 'ai_chat' %}", {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message: userMsg })
+    });
+
+    const data = await res.json();
+    aiBubble.innerText = data.reply;
+    log.scrollTop = log.scrollHeight;
+
+  } catch (err) {
+    aiBubble.innerText = 'Eroare la răspuns.';
+  }
+};
+</script>
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>

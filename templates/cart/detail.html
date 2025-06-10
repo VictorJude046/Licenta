@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cosul de Cumparaturi{% endblock %}
+
+{% block content %}
+<section class="cart-section">
+  <div class="container px-4 px-lg-5">
+    <h2 class="fw-bolder mb-4 text-white">Coșul de Cumpărături</h2>
+
+    <div class="table-responsive">
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Imagine</th>
+            <th>Produs</th>
+            <th>Cantitate</th>
+            <th>Șterge</th>
+            <th>Pret Unitar</th>
+            <th>Pret Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+            {% with product=item.product %}
+            <tr>
+              <td>
+                <a href="{{ product.get_absolute_url }}">
+                  <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="{{ product.name }}">
+                </a>
+              </td>
+              <td>{{ product.name }}</td>
+              <td>
+                <form action="{% url 'shopping_cart:add_to_cart' product.id %}" method="post" class="d-flex justify-content-center align-items-center">
+                  {% csrf_token %}
+                  {{ item.update_quantity_form.quantity }}
+                  {{ item.update_quantity_form.update }}
+                  <button type="submit" class="cart-btn cart-btn-update ms-2">Actualizează</button>
+                </form>
+              </td>
+              <td>
+                <a href="{% url 'shopping_cart:remove_from_cart' product.id %}" class="cart-remove">Șterge</a>
+              </td>
+              <td>{{ item.price }} RON</td>
+              <td>{{ item.total_price }} RON</td>
+            </tr>
+            {% endwith %}
+          {% empty %}
+            <tr><td colspan="6" class="text-white-50">Coșul este gol.</td></tr>
+          {% endfor %}
+          {% if cart %}
+          <tr class="cart-total-row">
+            <td colspan="5" class="text-end">Total</td>
+            <td>{{ cart.get_total_price }} RON</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cart-footer-buttons">
+      <a href="{% url 'public:shop' %}" class="btn cart-btn cart-btn-secondary">Continuă Cumpărăturile</a>
+      <a href="#" class="btn cart-btn cart-btn-update">Spre Finalizare Comandă</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

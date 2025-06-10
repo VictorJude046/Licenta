@@ -20,12 +20,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import ai_chat
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("",include("DjangoProject2.apps.public.urls")),
     path("accounts/", include("DjangoProject2.apps.accounts.urls")),
     path("cart/", include("DjangoProject2.apps.shopping_cart.urls")),
+    path('ai-chat/', ai_chat, name='ai_chat'),
     # Django auth
 ]
 

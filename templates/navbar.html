@@ -1,3 +1,4 @@
+{% load static %}
 {% url 'public:contact' as contact_url %}
 {% url 'public:events' as events_url %}
 {% url 'public:personalized_orders' as personalized_orders_url %}
@@ -5,23 +6,55 @@
 {% url 'public:about' as about_url %}
 {% url 'public:index' as index_url %}
 
-<!-- The class 'navbar-shrink' is now added conditionally -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top {% if request.path != index_url %}navbar-shrink{% endif %}" id="mainNav">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="{{ index_url }}">Fiare din beci</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars"></i>
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" href="{{ index_url }}">Fiare din beci</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link {% if request.path == index_url %}active {% endif %}" href="{{ index_url }}">Home</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == about_url %}active {% endif %}" href="{{ about_url }}">About</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == shop_url %}active {% endif %}" href="{{ shop_url }}">Shop</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == personalized_orders_url %}active {% endif %}" href="{{ personalized_orders_url }}">Personalized Orders</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == events_url %}active {% endif %}" href="{{ events_url }}">Events</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.path == contact_url %}active {% endif %}" href="{{ contact_url }}">Contact</a></li>
+      </ul>
+
+      <!-- Cart Dropdown -->
+      <div class="dropdown ms-lg-3">
+        <button class="btn gallery-btn-icon position-relative" type="button" id="cartDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-cart3"></i>
+          {% if cart|length > 0 %}
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ cart|length }}
+          </span>
+          {% endif %}
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link {% if request.path == index_url %}active {% endif %}" href="{{ index_url }}">Home</a></li>
-                <li class="nav-item"><a class="nav-link {% if request.path == about_url %}active {% endif %}" href="{{ about_url }}">About</a></li>
-                <li class="nav-item"><a class="nav-link {% if request.path == shop_url %}active {% endif %}" href="{{ shop_url }}">Shop</a></li>
-                <li class="nav-item"><a class="nav-link {% if request.path == personalized_orders_url %}active {% endif %}" href="{{ personalized_orders_url }}">Personalized Orders</a></li>
-                <li class="nav-item"><a class="nav-link {% if request.path == events_url %}active {% endif %}" href="{{ events_url }}">Events</a></li>
-                <li class="nav-item"><a class="nav-link {% if request.path == contact_url %}active {% endif %}" href="{{ contact_url }}">Contact</a></li>
-            </ul>
-        </div>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-cart p-3" aria-labelledby="cartDropdown" style="min-width: 300px; background-color: #1c1c1c; color: #fff;">
+          {% if cart %}
+            {% for item in cart %}
+              <li class="mb-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>{{ item.product.name }}</strong><br>
+                    <small>{{ item.quantity }} x {{ item.product.price }} RON</small>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+            <li><hr class="dropdown-divider bg-secondary"></li>
+            <li><a href="{% url 'shopping_cart:cart_detail' %}" class="btn btn-sm btn-outline-light w-100">Vezi Coșul</a></li>
+          {% else %}
+            <li class="text-muted">Coșul este gol.</li>
+          {% endif %}
+        </ul>
+      </div>
+      <!-- End Cart Dropdown -->
+
     </div>
-  </nav>
+  </div>
+</nav>
