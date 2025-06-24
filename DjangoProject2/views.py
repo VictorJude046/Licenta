@@ -2,31 +2,68 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import openai
+import requests
 import json
+import logging
+from django.shortcuts import render
+logger = logging.getLogger(__name__)
 
-client = openai.OpenAI(api_key= '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')
+OPENROUTER_API_KEY = "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"
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = "accounts/profile.html"
 
+
+def preview_360(request):
+    return render(request, 'product_360.html')
+
 @csrf_exempt
 def ai_chat(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        message = data.get('message')
-
         try:
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant that answers questions about products."},
-                    {"role": "user", "content": message}
-                ]
-            )
+            data = json.loads(request.body)
+            user_input = data.get('message')
 
-            reply = response.choices[0].message.content
+            if not user_input:
+                return JsonResponse({'error': 'Mesajul este gol.'}, status=400)
+
+            headers = {
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "Content-Type": "application/json",
+                "HTTP-Referer": "http://localhost:8000",  # sau domeniul tău real
+                "X-Title": "Fiare din Beci Assistant"
+            }
+
+            payload = {
+                "model": "mistralai/mistral-7b-instruct",
+                "messages": [
+                    {"role": "system", "content": "You are a helpful assistant that answers questions about handmade knives, blades, and custom orders."},
+                    {"role": "user", "content": user_input}
+                ]
+            }
+
+            response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload)
+
+            if response.status_code != 200:
+                print("Status code:", response.status_code)
+                print("Response text:", response.text)
+                return JsonResponse({'error': 'Eroare de la OpenRouter'}, status=500)
+
+            result = response.json()
+
+            try:
+                reply = result['choices'][0]['message']['content']
+            except Exception as e:
+                print("Eroare în parsare:", str(e))
+                print("Răspuns complet:", result)
+                return JsonResponse({'error': 'Format de răspuns invalid.'}, status=500)
+
             return JsonResponse({'reply': reply})
 
         except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
+            print("Eroare generală:", str(e))
+            return JsonResponse({'error': 'Eroare internă.'}, status=500)
+
+    return JsonResponse({'error': 'Doar POST este acceptat.'}, status=405)
+
+

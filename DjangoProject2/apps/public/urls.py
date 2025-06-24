@@ -11,4 +11,6 @@ urlpatterns = [
     path('personalized_orders/', views.personalized_orders, name='personalized_orders'),
     path('events/', views.events, name='events'),
     path('contact/', views.contact, name='contact'),
+    path('shop/<slug:slug>/preview-360/', views.product_360, name='product_360'),
+
 ]

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+{% load form_tags %}
+
+{% block title %}Înregistrare - Fiare din Beci{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-5 content-section">
+    <div class="container" style="max-width: 500px;">
+        <div class="card bg-dark text-white shadow">
+            <div class="card-body p-4 p-sm-5">
+                <h2 class="fw-bolder text-center mb-4">Înregistrare</h2>
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <p>Te rugăm să corectezi erorile de mai jos:</p>
+                            <ul class="mb-0">
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Nume utilizator:</label>
+                        {{ form.username|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.first_name.id_for_label }}" class="form-label">Prenume:</label>
+                        {{ form.first_name|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.last_name.id_for_label }}" class="form-label">Nume:</label>
+                        {{ form.last_name|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.age.id_for_label }}" class="form-label">Vârstă:</label>
+                        {{ form.age|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">Adresă de e-mail:</label>
+                        {{ form.email|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label">Parolă:</label>
+                        {{ form.password1|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmă parola:</label>
+                        {{ form.password2|add_class:"form-control" }}
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button class="btn btn-primary btn-lg" type="submit">Creează cont</button>
+                    </div>
+                </form>
+
+                <hr class="my-4 text-secondary" />
+
+                <div class="text-center">
+                    <p class="mb-2">Ai deja cont?</p>
+                    <a href="{% url 'accounts:login' %}" class="btn btn-outline-light btn-sm">Autentifică-te</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

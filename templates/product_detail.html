@@ -107,7 +107,7 @@
 
     .info-column {
         flex: 1 1 400px;
-        color: #1c1c1c;
+        color: rgba(255, 255, 255, 0.7);
     }
 
     .info-column h1 {
@@ -123,7 +123,7 @@
 
     .info-column p {
         margin-bottom: 1.5rem;
-        color: #1c1c1c;
+        color: rgba(255, 255, 255, 0.7);
     }
 
     .btn-theme-primary {
@@ -200,6 +200,11 @@
                 <button class="btn gallery-btn-icon hidden" id="next-image-btn" aria-label="Next image">
                     <i class="fas fa-chevron-right"></i>
                 </button>
+               {% if product.images_360.all %}
+                <a href="{% url 'public:product_360' product.slug %}" class="btn btn-outline-light mt-3">
+                    Previzualizare 360°
+                </a>
+               {% endif %}
             </div>
         </div>
 
@@ -209,13 +214,19 @@
             <div class="price">{{ product.price }} RON</div>
             <p class="lead">{{ product.description|linebreaks }}</p>
             <div class="d-flex align-items-center">
-                <form action="{% url 'shopping_cart:add_to_cart' product.id %}" method="post" class="d-flex w-100">
+                <form action="{% url 'shopping_cart:add_to_cart' product.id %}" method="post" class="d-flex w-100 align-items-center">
                     {% csrf_token %}
-                    <input class="form-control text-center" id="inputQuantity" name="quantity" type="number" value="1" style="max-width: 5rem;" />
+                    <!-- This hidden input sends a quantity of 1 with the form -->
+                    <input type="hidden" name="quantity" value="1">
 
-                    <input type="hidden" name="update" value="True">
+                    <div class="me-3">
+                        <p class="text-success mb-0 fw-bold">
+                            <i class="fas fa-check-circle me-1"></i>
+                            Produsul este in stoc
+                        </p>
+                    </div>
 
-                    <button class="btn btn-theme-primary ms-3 flex-shrink-0" type="submit">
+                    <button class="btn btn-theme-primary ms-auto flex-shrink-0" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Adaugă în coș
                     </button>

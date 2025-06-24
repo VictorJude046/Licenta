@@ -1,15 +1,14 @@
-version: "3.7"
+version: "3.8" # Using a slightly newer version for healthcheck features
 
 x-service-volumes: &service-volumes
     - type: bind
-      source: ./
+      source: .
       target: /app
       read_only: false
     - type: bind
-      source: media
+      source: ./media
       target: /app/media
       read_only: false
-
 
 x-database-variables: &database-variables
     POSTGRES_DB: postgres
@@ -20,7 +19,6 @@ x-app-variables: &app-variables
     <<: *database-variables
     POSTGRES_HOST: postgres
 
-
 services:
     website:
         image: fiare-din-beci-proiect:latest
@@ -28,14 +26,19 @@ services:
         volumes: *service-volumes
         environment: *app-variables
         depends_on:
-            - db_migrate
+            db_migrate:
+                condition: service_completed_successfully
         ports:
             - "8000:8000"
+
     db_migrate:
         image: fiare-din-beci-proiect:latest
         command: python manage.py migrate
         volumes: *service-volumes
         environment: *app-variables
+        depends_on:
+            postgres:
+                condition: service_healthy # <-- This is the key fix
 
     postgres:
         image: postgres
@@ -44,7 +47,11 @@ services:
         environment: *database-variables
         volumes:
             - db-data:/var/lib/postgresql/data
+        healthcheck: # <-- This section checks if the database is ready
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
 
 volumes:
     db-data:
-

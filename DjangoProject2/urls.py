@@ -23,14 +23,24 @@ from django.conf.urls.static import static
 from .views import ai_chat
 
 
+# Define your primary URL patterns first.
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("",include("DjangoProject2.apps.public.urls")),
     path("accounts/", include("DjangoProject2.apps.accounts.urls")),
     path("cart/", include("DjangoProject2.apps.shopping_cart.urls")),
     path('ai-chat/', ai_chat, name='ai_chat'),
-    # Django auth
 ]
 
+# This is the key change. We add the media URL patterns here,
+# BEFORE the catch-all flatpages pattern is added.
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# The flatpages pattern acts as a "catch-all" and must be added last.
+urlpatterns += [
+    path("", include('django.contrib.flatpages.urls')),
+    path('admin/', admin.site.urls),
+    path('accounts/', include('DjangoProject2.apps.accounts.urls')),  # your custom app
+    path('accounts/', include('django.contrib.auth.urls')),
+]

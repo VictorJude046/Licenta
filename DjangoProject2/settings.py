@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "DjangoProject2.apps.accounts",
     'DjangoProject2.apps.public.apps.PublicConfig',
-    'DjangoProject2.apps.shopping_cart' ,
+    'DjangoProject2.apps.shopping_cart',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    'DjangoProject2.apps.site_settings',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +128,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -134,11 +138,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
-LOGIN_REDIRECT_URL = "public:index"
-Login_url = "account:login"
-LOGOUT_REDIRECT_URL = "public:index"
+LOGIN_REDIRECT_URL = "/"
+Login_url = "/account/login/"
+LOGOUT_REDIRECT_URL = "/"
 
-# Default primary key field type
+# Default primary key field typeAS
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -146,3 +150,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 CART_SESSION_ID = 'cart'
+
+print(f"--- SETTINGS CHECK ---")
+print(f"DEBUG mode is: {DEBUG}")
+print(f"MEDIA_URL is: {MEDIA_URL}")
+print(f"MEDIA_ROOT is: {MEDIA_ROOT}")
+print(f"----------------------")

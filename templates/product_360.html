@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid bg-dark text-center py-5">
+  <h2 class="text-white mb-4">{{ product.name }} – Previzualizare 360°</h2>
+
+  <div id="spinner-wrapper">
+    <div id="spinner360"></div>
+  </div>
+</div>
+
+<style>
+  #spinner-wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  #spinner360 {
+    width: 100%;
+    max-width: 1100px; /* Mai lat */
+    height: auto;
+    aspect-ratio: 1 / 1;
+    max-height: 80vh;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    #spinner360 {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/spritespin@4.0.11/release/spritespin.min.js"></script>
+
+<script>
+  function setupSpinner() {
+    const container = $("#spinner360");
+    const size = Math.min(container.width(), $(window).height() * 0.8);
+
+    container.empty().spritespin({
+      source: [
+        {% for img in product.images_360.all %}
+          "{{ img.image.url }}"{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ],
+      width: size,
+      height: size,
+      sense: -1,
+      frameTime: 40,
+      animate: false,
+      responsive: true
+    });
+  }
+
+  $(function () {
+    setupSpinner();
+    $(window).on('resize', setupSpinner);
+  });
+</script>
+{% endblock %}

@@ -21,6 +21,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, null=True)
 
     name = models.CharField(max_length=200)
+    slug = models.SlugField(null=True, blank=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='products/')
@@ -35,3 +36,23 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.product.name}"
+
+class Project(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to='projects/')
+    is_featured = models.BooleanField(default=False, help_text="Check this for the main, top project on the homepage.")
+    display_order = models.PositiveIntegerField(default=0, help_text="Projects with a lower number will be displayed first.")
+
+    class Meta:
+        ordering = ['display_order'] # Default order for all projects
+
+    def __str__(self):
+        return self.title
+
+class ProductImage360(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images_360')
+    image = models.ImageField(upload_to='product_360/')
+
+    def __str__(self):
+        return f"360 Image for {self.product.name}"

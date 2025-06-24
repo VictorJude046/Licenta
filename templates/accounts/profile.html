@@ -1,41 +1,44 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}Profilul Meu - Fiare din Beci{% endblock %}
 
 {% block content %}
-    <h1>
-        {{ user.get_full_name }} (@{{ user.username }})
-    </h1>
+<section class="py-5 mt-5 content-section">
+    <div class="container" style="max-width: 700px;">
+        <div class="card bg-dark text-white shadow">
+            <div class="card-body p-4">
+                <h2 class="fw-bold mb-4 text-center">Profilul Meu</h2>
 
-    {% with profile=user.profile %}
-        {% if profile %}
-            <h2>
-                {{ profile.persona|default:"" }}
-            </h2>
-
-            <div>
-                {{ profile.bio|default:"" }}
-            </div>
-
-            {% with website=profile.website|default:"" %}
-                {% if website %}
-                    <p><a href="{{ website }}">{{ website }}</a></p>
+                {% if profile %}
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-3">
+                            {% if profile.profile_picture %}
+                                <img src="{{ profile.profile_picture.url }}" class="img-fluid rounded-circle border" alt="Poză de profil">
+                            {% else %}
+                                <img src="{% static 'images/default-profile.png' %}" class="img-fluid rounded-circle border" alt="Poză implicită">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <p><strong>Nume complet:</strong> {{ profile.full_name }}</p>
+                            <p><strong>Adresă email:</strong> {{ profile.email }}</p>
+                            <p><strong>Vârstă:</strong> {{ profile.age }}</p>
+                            <p><strong>Telefon:</strong> {{ profile.phone }}</p>
+                            <p><strong>Adresă:</strong> {{ profile.address }}</p>
+                            <p><strong>Oraș:</strong> {{ profile.city }}</p>
+                            <p><strong>Țară:</strong> {{ profile.country }}</p>
+                            <p><strong>Cod poștal:</strong> {{ profile.postal_code }}</p>
+                            <p><strong>Despre mine:</strong> {{ profile.bio }}</p>
+                            <p><small class="text-muted">Creat: {{ profile.date_created|date:"d M Y H:i" }}</small></p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning text-center">
+                        Profilul tău nu a fost completat încă.
+                    </div>
                 {% endif %}
-            {% endwith %}
-
-            <br />
-            <br />
-
-            Interests:
-            <p>
-            {% for interest in profile.interests.all %}
-                <span>
-                    {{ interest.name }}{% if not forloop.last %}, {% endif %}
-                </span>
-            {% endfor %}
-            </p>
-        {% else %}
-            <p>No profile information available.</p>
-        {% endif %}
-    {% endwith %}
-{% endblock content %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

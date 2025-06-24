@@ -23,8 +23,9 @@ class UserPersona(models.Model):
 
 class UserProfile(models.Model):
     #owner
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='userprofile')
+    full_name = models.CharField(max_length=100, blank=True)
+    age = models.PositiveIntegerField(null=True, blank=True)
     #settings
     is_full_name_displayed = models.BooleanField(default=True)
 
@@ -34,3 +35,6 @@ class UserProfile(models.Model):
     website = models.URLField(max_length=200,blank=True, null=True)
     persona=models.ForeignKey(UserPersona,on_delete=models.SET_NULL,blank=True, null=True)
     interests = models.ManyToManyField(UserInterest,blank=True)
+
+    def __str__(self):
+        return self.user.username

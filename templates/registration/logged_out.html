@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container text-center">
+    <h2 class="mb-4">Ai fost delogat cu succes</h2>
+    <a href="{% url 'login' %}" class="btn btn-primary">Autentifică-te din nou</a>
+    <a href="/" class="btn btn-secondary">Înapoi la homepage</a>
+  </div>
+</section>
+{% endblock %}
